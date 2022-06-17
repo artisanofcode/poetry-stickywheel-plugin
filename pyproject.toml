@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "poetry-stickywheel-plugin"
+version = "0.0.1"
+description = ""
+authors = ["Daniel Knell <contact@danielknell.co.uk>"]
+readme = "README.md"
+packages = [{include = "poetry_stickywheel_plugin.py", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.group.dev.dependencies]
+shed = "^0.10.1"
+
+[tool.poetry.plugins."poetry.application.plugin"]
+stickywheel = "poetry_stickywheel_plugin:StickyWheelsPlugin"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
