@@ -71,4 +71,4 @@ jobs:
       if: ${{ steps.release.outputs.release_created }}
       run: poetry publish
       env:
-        POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
+        POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_AUTH_TOKEN }}
