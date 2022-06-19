@@ -42,7 +42,7 @@ jobs:
 
     - name: set up python cache
       if: ${{ steps.release.outputs.release_created }}
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       id: python-cache
       with:
         path: .venv
