@@ -9,7 +9,7 @@ jobs:
   release-please:
     runs-on: ubuntu-latest
     env:
-      PACKAGE_NAME: "conjecture"
+      PACKAGE_NAME: "poetry-stickywheel-plugin"
     steps:
     - name: release please
       uses: google-github-actions/release-please-action@v3
