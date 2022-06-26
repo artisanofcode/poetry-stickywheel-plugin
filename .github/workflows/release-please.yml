@@ -18,43 +18,19 @@ jobs:
         release-type: python
         package-name: ${{ env.PACKAGE_NAME }}
 
-    - uses: actions/checkout@v3
+    - name: fetch code
+      uses: actions/checkout@v3
       if: ${{ steps.release.outputs.release_created }}
 
     - name: set python version
-      if: ${{ steps.release.outputs.release_created }}
       uses: actions/setup-python@v4
       with:
         python-version: "3.10"
+      if: ${{ steps.release.outputs.release_created }}
 
-    - name: install poetry
+    - name: install dependencies
+      uses: artisanal-actions/poetry-install@v1
       if: ${{ steps.release.outputs.release_created }}
-      run: |
-        curl -sSL https://install.python-poetry.org | python - --preview
-        
-    - name: Update PATH
-      if: ${{ steps.release.outputs.release_created }}
-      run: echo "$HOME/.local/bin" >> $GITHUB_PATH
-
-    - name: configure poetry
-      if: ${{ steps.release.outputs.release_created }}
-      run: poetry config virtualenvs.in-project true
-
-    - name: set up python cache
-      if: ${{ steps.release.outputs.release_created }}
-      uses: actions/cache@v3
-      id: python-cache
-      with:
-        path: .venv
-        key: venv-${{ hashFiles('**/poetry.lock') }}
-      
-    - name: ensure cache is healthy
-      if: ${{ steps.python-cache.outputs.cache-hit == 'true' && steps.release.outputs.release_created }}
-      run: timeout 10s poetry run pip --version || rm -rf .venv
-    
-    - name: install python dependencies
-      if: ${{ steps.python-cache.outputs.cache-hit != 'true' && steps.release.outputs.release_created }}
-      run: poetry install
 
     - name: build release
       if: ${{ steps.release.outputs.release_created }}
@@ -62,13 +38,13 @@ jobs:
       
     - name: upload assets
       uses: softprops/action-gh-release@v1
-      if: ${{ steps.release.outputs.release_created }}
       with:
         tag_name: ${{ steps.release.outputs.tag_name }}
         files: dist/*
+      if: ${{ steps.release.outputs.release_created }}
 
     - name: publish release
-      if: ${{ steps.release.outputs.release_created }}
       run: poetry publish
       env:
         POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_AUTH_TOKEN }}
+      if: ${{ steps.release.outputs.release_created }}
