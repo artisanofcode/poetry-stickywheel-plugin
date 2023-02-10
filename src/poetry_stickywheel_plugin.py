@@ -10,8 +10,30 @@ import poetry.console.commands.publish
 import poetry.core.packages.dependency
 import poetry.core.packages.dependency_group
 import poetry.core.packages.directory_dependency
+import poetry.core.pyproject.exceptions
 import poetry.core.pyproject.toml
 import poetry.plugins.application_plugin
+
+
+class StickyWheelsConfig:
+    def __init__(self, config: poetry.core.pyproject.toml.PyProjectTOML) -> None:
+        self._config = config.data.get("tool", {}).get("stickywheel", {})
+
+    @property
+    def strategy(self) -> str:
+        return self._config.get("strategy", "semver")
+
+    def prepare_constraint(self, version: str) -> str:
+        if self.strategy == "semver":
+            return f"^{version}"
+        elif self.strategy == "minimum":
+            return f">={version}"
+        elif self.strategy == "exact":
+            return version
+        else:
+            raise poetry.core.pyproject.exceptions.PyProjectException(
+                "Invalid StickyWheel strategy configured."
+            )
 
 
 class StickyWheelsPlugin(poetry.plugins.application_plugin.ApplicationPlugin):
@@ -20,12 +42,13 @@ class StickyWheelsPlugin(poetry.plugins.application_plugin.ApplicationPlugin):
         poetry.console.commands.publish.PublishCommand,
     )
 
-    def activate(self, application: poetry.console.application.Application):
+    def activate(self, application: poetry.console.application.Application) -> None:
         application.event_dispatcher.add_listener(
             cleo.events.console_events.COMMAND,
             self.event_listener,
         )
         self.package = application.poetry.package
+        self.config = StickyWheelsConfig(application.poetry.pyproject)
 
     def event_listener(
         self,
@@ -87,6 +110,6 @@ class StickyWheelsPlugin(poetry.plugins.application_plugin.ApplicationPlugin):
 
         return poetry.core.packages.dependency.Dependency(
             name,
-            f"^{version}",
+            self.config.prepare_constraint(version),
             groups=dependency.groups,
         )

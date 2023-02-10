@@ -47,6 +47,27 @@ the dependency will be rewritten as if it had been defined as:
 b = "^1.2.3"
 ```
 
+## Configuration
+
+You can define a section in your `pyproject.toml` file named `tool.stickywheel`, to configure various options.
+
+### Dependency constraint strategy
+
+The default strategy is `semver` (described in the "Help" section above), but there are other choices:
+
+| strategy  | version | result    |
+|-----------|---------|-----------|
+| `semver`  | `1.2.3` | `^1.2.3`  |
+| `minimum` | `1.2.3` | `>=1.2.3` |
+| `exact`   | `1.2.3` | `1.2.3`   |
+
+To override the default, add `strategy` to the configuration. For example:
+
+```toml
+[tool.stickywheel]
+strategy = "exact"
+```
+
 ## ⚖️ Licence
 
 This project is licensed under the [MIT licence][mit_licence].
