@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "poetry-stickywheel-plugin"
-version = "0.0.1"
+version = "0.1.0"
 description = ""
 authors = ["Daniel Knell <contact@danielknell.co.uk>"]
 readme = "README.md"
