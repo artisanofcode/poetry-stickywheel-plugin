@@ -299,14 +299,14 @@ files = [
 
 [[package]]
 name = "shed"
-version = "0.10.9"
+version = "2023.3.1"
 description = "`shed` canonicalises Python code."
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "shed-0.10.9-py3-none-any.whl", hash = "sha256:ca2c4863abba47df2463fed51bca1cc81b4380b0fb07e18ccc207506ea5ef03b"},
-    {file = "shed-0.10.9.tar.gz", hash = "sha256:586409073267c0b74ec82526d0bcd1f9e857f785d9f1f07e6c3f3f1091e82712"},
+    {file = "shed-2023.3.1-py3-none-any.whl", hash = "sha256:f67aea50adb6c86f14d45794f8176b559b06172176d0545f3650391185f9ee67"},
+    {file = "shed-2023.3.1.tar.gz", hash = "sha256:807d130cda5e84532f5f5e4ddadca5746d7b8f1888f26d4729ea469ad75933c5"},
 ]
 
 [package.dependencies]
@@ -373,4 +373,4 @@ typing-extensions = ">=3.7.4"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "d719c8e07b607e430e12b32e0ea3bad7ccc256028d1f2a04be56ee3ffdbd0555"
+content-hash = "64f327a3c2b655f08f9f76adead370d68345bc3ce0d206a300fed53c262b14af"
