@@ -10,7 +10,7 @@ packages = [{include = "poetry_stickywheel_plugin.py", from = "src"}]
 python = "^3.10"
 
 [tool.poetry.group.dev.dependencies]
-shed = ">=0.10.1,<2023.4.0"
+shed = ">=0.10.1,<2023.6.0"
 
 [tool.poetry.plugins."poetry.application.plugin"]
 stickywheel = "poetry_stickywheel_plugin:StickyWheelsPlugin"
