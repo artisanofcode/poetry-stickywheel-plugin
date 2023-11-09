@@ -7,10 +7,25 @@ readme = "README.md"
 packages = [{include = "poetry_stickywheel_plugin.py", from = "src"}]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.9"
+poetry = "^1.2"
 
 [tool.poetry.group.dev.dependencies]
 shed = ">=0.10.1,<2023.7.0"
+pytest = ">=7.2.1"
+coverage = ">=7.1.0"
+
+[tool.coverage.report]
+show_missing = true
+skip_empty = true
+
+[tool.coverage.run]
+branch = true
+omit = ["tests/**"]
+source = ["."]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
 
 [tool.poetry.plugins."poetry.application.plugin"]
 stickywheel = "poetry_stickywheel_plugin:StickyWheelsPlugin"

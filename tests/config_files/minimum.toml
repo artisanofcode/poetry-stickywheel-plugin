@@ -1,0 +1,2 @@
+[tool.stickywheel]
+strategy = "minimum"
