@@ -19,7 +19,7 @@ jobs:
         package-name: ${{ env.PACKAGE_NAME }}
 
     - name: fetch code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       if: ${{ steps.release.outputs.release_created }}
 
     - name: set python version
